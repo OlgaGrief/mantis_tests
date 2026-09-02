@@ -11,9 +11,24 @@ namespace mantis_tests
         protected IWebDriver driver;
         protected string baseURL;
 
-        public RegistrationHelper Registration { get; }
-        public FtpHelper Ftp { get; set; }
-
+        public RegistrationHelper Registration { get; }       
+        private FtpHelper ftp;
+        public FtpHelper Ftp
+        {
+            get
+            {
+                if (ftp == null)
+                {
+                    ftp = new FtpHelper(this);
+                }
+                return ftp;
+            }
+        }
+        public JamesHelper James { get; }
+        public MailHelper Mail { get; }
+        public LoginHelper Auth { get; }
+        public ManagementMenuHelper Menu { get; }
+        public ProjectManagementHelper Project { get; }
         private StringBuilder verificationErrors;
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -21,8 +36,14 @@ namespace mantis_tests
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/";
+
             Registration = new RegistrationHelper(this);
-            Ftp = new FtpHelper(this);
+            James = new JamesHelper(this);
+            Mail = new MailHelper(this);
+
+            Auth = new LoginHelper(this);
+            Menu = new ManagementMenuHelper(this);
+            Project = new ProjectManagementHelper(this);
         }
 
         ~ApplicationManager()

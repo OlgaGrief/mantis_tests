@@ -14,7 +14,8 @@ namespace mantis_tests
         public FtpHelper(ApplicationManager manager) : base(manager)
         {
             client = new FtpClient();
-            client.Host = "localhost";
+            client.Host = "127.0.0.1";
+            //client.Port = 4555;
             client.Credentials = new System.Net.NetworkCredential("mantis", "mantis");
             client.Connect();
         }
@@ -34,19 +35,19 @@ namespace mantis_tests
         public void RestoreBackupFile(string path)
         {
             String backupPath = path + ".bak"; // создаем путь для резервной копии файла
-            if (client.FileExists(backupPath))
+            if (!client.FileExists(backupPath))
             {
                 return; // если резервная копия не существует, то выходим из метода
             }
             if (client.FileExists(backupPath))
             {
-                client.DeleteFile(path); // удаляем текущий файл на сервере
+                client.DeleteFile(path); // удаляем текущий файл на сервере, если он существует
             }
             client.Rename(backupPath, path); // переименовываем резервную копию в исходный файл на сервере
         }
 
         // Метод для загрузки файла на FTP-сервер
-        public void Upload(string path, Stream localFile)
+        public void Upload(String path, Stream localFile)
         {
             if (client.FileExists(path))
             {

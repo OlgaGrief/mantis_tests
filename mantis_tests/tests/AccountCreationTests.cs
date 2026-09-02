@@ -18,18 +18,25 @@ namespace mantis_tests
             app.Ftp.BackupFile("/config/config_inc.php"); // делаем резервную копию файла config_inc.php на сервере
             using(Stream localFile = File.Open("config_inc.php", FileMode.Open))
             {
-                app.Ftp.Upload("config_inc.php", localFile); // загружаем локальный файл config_inc.php на сервер, чтобы отключить капчу
+                app.Ftp.Upload("/config/config_inc.php", localFile); // загружаем локальный файл config_inc.php на сервер, чтобы отключить капчу
             }           
         }
         [Test]
+
+        // Тестовый метод для проверки регистрации учетной записи
         public void TestAccountRegistration()
         {
+            string suffix = DateTime.Now.ToString("yyyyMMddHHmmss");
+
             AccountData account = new AccountData()
             {
-                Name = "testuser",
+                Name = "testuser" + suffix,
                 Password = "password",
-                Email = "testuser@localhost.localdomain"
+                Email = "testuser" + suffix + "@localhost.localdomain"
             };
+
+            app.James.Delete(account); // удаляем учетную запись на сервере James, если она существует
+            app.James.Add(account); // добавляем учетную запись на сервер James           
 
             app.Registration.Register(account);
         }
@@ -39,7 +46,7 @@ namespace mantis_tests
         // Метод для восстановления конфигурационного файла после тестов
         public void RestoreConfig()
         {
-            app.Ftp.RestoreBackupFile("/config/config_inc.php.bak"); // восстанавливаем резервную копию файла config_inc.php на сервере
+            app.Ftp.RestoreBackupFile("/config/config_inc.php"); // восстанавливаем резервную копию файла config_inc.php на сервере
         }
     }
 }

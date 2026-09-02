@@ -10,4 +10,14 @@ $g_default_timezone       = 'Europe/Berlin';
 $g_crypto_master_salt     = 's3seCtzNjKkTlosTYYCPrreGG8uUWD4YBcasiSzA75w=';
 
 $g_path                   = 'http://localhost/mantisbt-2.28.4/';
-$g singup_use_captcha = OFF;
+$g_session_validation     = OFF;
+$g_signup_use_captcha     = OFF;
+
+$g_phpMailer_method       = PHPMAILER_METHOD_SMTP;
+$g_smtp_host              = '127.0.0.1';
+$g_smtp_port              = 25;
+$g_smtp_username          = '';
+$g_smtp_password          = '';
+
+$g_from_email             = 'mantis@localhost.localdomain';
+$g_return_path_email      = 'mantis@localhost.localdomain';
