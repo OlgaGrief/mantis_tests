@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Internal;
 using System;
 using System.Text;
 using System.Threading;
@@ -29,13 +30,15 @@ namespace mantis_tests
         public LoginHelper Auth { get; }
         public ManagementMenuHelper Menu { get; }
         public ProjectManagementHelper Project { get; }
+        public AdminHelper Admin { get; }
+
         private StringBuilder verificationErrors;
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost/";
+            baseURL = "http://localhost/mantisbt-2.28.4";
 
             Registration = new RegistrationHelper(this);
             James = new JamesHelper(this);
@@ -44,6 +47,8 @@ namespace mantis_tests
             Auth = new LoginHelper(this);
             Menu = new ManagementMenuHelper(this);
             Project = new ProjectManagementHelper(this);
+
+            Admin = new AdminHelper(this, baseURL);
         }
 
         ~ApplicationManager()
@@ -58,12 +63,13 @@ namespace mantis_tests
             }
         }
 
+        // синглтон, чтобы не создавать каждый раз новый экземпляр класса ApplicationManager
         public static ApplicationManager GetInstance()
         {
             if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-2.28.4/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;

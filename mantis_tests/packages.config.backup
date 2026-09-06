@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <packages>
   <package id="BouncyCastle" version="1.7.0" targetFramework="net48" />
   <package id="Microsoft.Bcl.AsyncInterfaces" version="8.0.0" targetFramework="net48" />
@@ -8,9 +8,8 @@
   <package id="NUnit" version="4.6.1" targetFramework="net48" />
   <package id="NUnitTestAdapter.WithFramework" version="2.0.0" targetFramework="net48" />
   <package id="OpaqueMail" version="2.4.3" targetFramework="net48" />
-  <package id="Selenium.Support" version="3.14.0" targetFramework="net48" />
-  <package id="Selenium.WebDriver" version="3.14.0" targetFramework="net48" />
-  <package id="Selenium.WebDriver.GeckoDriver" version="0.37.1" targetFramework="net48" />
+  <package id="Selenium.Support" version="4.48.0" targetFramework="net48" />
+  <package id="Selenium.WebDriver" version="4.48.0" targetFramework="net48" />
   <package id="SimpleBrowser" version="0.5.61.0" targetFramework="net48" />
   <package id="SimpleBrowser.WebDriver" version="0.5.43" targetFramework="net48" />
   <package id="System.Buffers" version="4.5.1" targetFramework="net48" />

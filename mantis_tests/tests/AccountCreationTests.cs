@@ -25,7 +25,7 @@ namespace mantis_tests
 
         // Тестовый метод для проверки регистрации учетной записи
         public void TestAccountRegistration()
-        {
+        {           
             string suffix = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             AccountData account = new AccountData()
@@ -34,6 +34,14 @@ namespace mantis_tests
                 Password = "password",
                 Email = "testuser" + suffix + "@localhost.localdomain"
             };
+
+            List<AccountData> accounts = app.Admin.GetAllAccounts(); // получаем список всех учетных записей с сервера
+
+            AccountData existingAccount = accounts.Find(x => x.Name.Equals(account.Name)); // ищем учетную запись с таким же именем в списке существующих учетных записей
+            if (existingAccount != null)
+            {
+                app.Admin.DeleteAccount(existingAccount);
+            }
 
             app.James.Delete(account); // удаляем учетную запись на сервере James, если она существует
             app.James.Add(account); // добавляем учетную запись на сервер James           
