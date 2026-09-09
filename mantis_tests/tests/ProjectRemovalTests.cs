@@ -9,22 +9,31 @@ namespace mantis_tests
         [Test]
         public void ProjectRemovalTest()
         {
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+
+            List<ProjectData> oldProjects = app.API.GetProjectList(account);
 
             if (oldProjects.Count == 0)
             {
                 ProjectData project = new ProjectData("test" + GenerateRandomString(10));
 
-                app.Project.Create(project);
+                app.API.CreateProject(account, project); // Создание проекта через API
 
-                oldProjects = app.Project.GetProjectList();
+                oldProjects = app.API.GetProjectList(account);
             }
 
             ProjectData toBeRemoved = oldProjects[0];
 
-            app.Project.Remove(toBeRemoved);
+            app.Menu.GoToManagementMenu(); // Selenium Переход в меню управления 
+            app.Menu.OpenProjectTab(); // Selenium Переход в меню управления проектами
 
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            app.Project.Remove(toBeRemoved); // Selenium Удаление проекта через UI
+
+            List<ProjectData> newProjects = app.API.GetProjectList(account);
 
             oldProjects.RemoveAt(0);
 

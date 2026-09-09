@@ -25,6 +25,8 @@ namespace mantis_tests
             driver.FindElement(By.CssSelector("input[type='submit']")).Click();
         }
 
+        // Эта функция проверяет, выполнен ли вход в систему MantisBT, путем проверки наличия элемента с именем "username" на странице.
+        // Если элемент отсутствует, это означает, что пользователь уже вошел в систему.
         public bool IsLoggedIn()
         {
             return !IsElementPresent(By.Name("username"));

@@ -24,6 +24,8 @@ namespace mantis_tests
         [Test]
 
         // Тестовый метод для проверки регистрации учетной записи
+        // cd C:\james\bin
+        // .\run.bat
         public void TestAccountRegistration()
         {           
             string suffix = DateTime.Now.ToString("yyyyMMddHHmmss");

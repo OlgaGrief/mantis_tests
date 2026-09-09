@@ -6,22 +6,22 @@ namespace mantis_tests
     [TestFixture]
     public class ProjectCreationTests : AuthTestBase
     {
-
-        // получили старый список проектов, создали новый проект, получили новый список,
-        // добавили созданный проект к старому списку, отсортировали оба списка,сравнили
-
         [Test]
-        public void ProjectCreationTest() 
+        public void ProjectCreationTest()
         {
-            ProjectData project = new ProjectData("test" + GenerateRandomString(10));
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
 
-            List<ProjectData> oldProjects =
-                app.Project.GetProjectList();
+            ProjectData project = new ProjectData("test" + GenerateRandomString(10)); // Создаем новый проект с уникальным именем
 
-            app.Project.Create(project);
+            List<ProjectData> oldProjects = app.API.GetProjectList(account); // Получаем список проектов до создания нового проекта
 
-            List<ProjectData> newProjects =
-                app.Project.GetProjectList();
+            app.Project.Create(project); // Создаем новый проект через UI
+
+            List<ProjectData> newProjects = app.API.GetProjectList(account);
 
             oldProjects.Add(project);
 
