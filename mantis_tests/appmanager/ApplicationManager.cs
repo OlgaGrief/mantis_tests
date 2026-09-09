@@ -31,6 +31,7 @@ namespace mantis_tests
         public ManagementMenuHelper Menu { get; }
         public ProjectManagementHelper Project { get; }
         public AdminHelper Admin { get; }
+        public APIHelper API { get; set;  }
 
         private StringBuilder verificationErrors;
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
@@ -49,6 +50,7 @@ namespace mantis_tests
             Project = new ProjectManagementHelper(this);
 
             Admin = new AdminHelper(this, baseURL);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
